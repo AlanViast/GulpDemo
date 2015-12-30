@@ -15,10 +15,6 @@ gulp.task('hello', function(){
   console.log('Hell World');
 });
 
-gulp.task('compress', ['minify', 'minify-css'], function(){
-
-});
-
 gulp.task('minify', function(){
   gulp.src('src/js/**/*.js')
     .pipe(minify())   // 代码压缩
@@ -55,5 +51,7 @@ var watcher = function(){
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 };
+
+gulp.task('compress', ['minify', 'minify-css'], function(){});
 
 gulp.task('watch', ['compress'], watcher);
