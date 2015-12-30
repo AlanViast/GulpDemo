@@ -1,0 +1,10 @@
+@import 'a';
+
+#target {
+
+  color: red;
+
+  > a {
+    font-size: 20px;
+  }
+}

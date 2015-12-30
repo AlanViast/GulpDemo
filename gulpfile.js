@@ -3,6 +3,8 @@ var minify = require('gulp-minify');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('default',['compress'], function() {
   // place code for your default task here
@@ -30,8 +32,26 @@ gulp.task('minify-css', function() {
     .pipe(gulp.dest('dist/css'));
 });
 
+gulp.task('sass', function () {
+  gulp.src('src/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('sass:watch', function () {
+  gulp.watch('./sass/**/*.scss', ['sass']);
+});
+
+gulp.task('sass:build', function () {
+  gulp.src('src/sass/**/*.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(sourcemaps.write('./maps'))
+    .pipe(gulp.dest('dist/css'));
+});
+
 var watcher = function(){
-  gulp.watch('js/**/*.js', function(event) {
+  gulp.watch('src/**/*.*', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });
 };
